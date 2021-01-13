@@ -540,10 +540,12 @@ public enum RepoActions {
     public static func fetch(shell: ShellContext, fetchOptions: FetchOptions) {
         let podName = fetchOptions.podName
         let urlString = fetchOptions.url
+        print("--------------- fetch podName=\(podName) urlString=\(urlString)")
         _ = shell.command(CommandBinary.mkdir, arguments: ["-p", PodStoreCacheDir])
 
         // Cache Hit
         let podCacheRoot = escape(cacheRoot(forPod: podName, url: urlString))
+        print("--------------- fetch podCacheRoot=\(podCacheRoot)")
         if shell.hasDir(podCacheRoot) {
             exportArchive(shell: shell, podCacheRoot: podCacheRoot,
                           fetchOptions: fetchOptions)
@@ -554,6 +556,7 @@ public enum RepoActions {
         let url = NSURL(string: urlString)!
         let fileName = url.lastPathComponent!
         let download = downloadsDir + "/" + podName + "-" + fileName
+        print("--------------- fetch download=\(download)")
         guard let wwwUrl = NSURL(string: urlString).map({ $0 as URL }),
             shell.download(url: wwwUrl, toFile: download) else {
             fatalError("Download of \(podName) failed")

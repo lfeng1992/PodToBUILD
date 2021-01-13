@@ -293,6 +293,7 @@ public struct SystemShellContext : ShellContext {
     }
     
     public func download(url: URL, toFile file: String) -> Bool {
+        print("--------------- download url=\(url) toFile=\(toFile)")
         log("DOWNLOAD \(url) TO \(file)")
         guard let fileData = NSData(contentsOf: url) else {
             return false
